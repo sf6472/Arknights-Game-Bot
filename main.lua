@@ -3,13 +3,26 @@ require("ui")
 require("检查界面")
 
 w,h = getScreenSize();
+gw = 1280
+gh = 720
+
 if w == 720 and h == 1280 then
     --dialog("720*1280")
     init('0', 1); --以当前应用 Home 键在右边初始化 --xx用1
+    os.execute("wm overscan 0,0,0,0");
 elseif w == 1280 and h == 720 then
     --dialog("1280*1280")
     init('0', 0); --以当前应用 Home 键在右边初始化 --xx用1
 
+-- elseif w > h then
+--     init('0', 0); --以当前应用 Home 键在右边初始化 --xx用1
+--     os.execute("wm overscan w-gh,0,0,h-gw");
+--     os.execute("wm density 240")
+-- elseif w < h then
+--     init('0', 1); --以当前应用 Home 键在右边初始化 --xx用1
+--     os.execute("wm overscan 0,0,w-gw,h-gh");
+--     os.execute("wm density 240")
+    
 else
     init('0', 1); --以当前应用 Home 键在右边初始化 --xx用1
     --dialog("最佳适配分辨率为720x1280\n可以尝试继续运行 但不一定能用",{timeout = 20,title = "非最佳适配分辨率",button = "继续运行"})
@@ -30,7 +43,7 @@ if countEnd == nil then
     countEnd = 0
 end
 
-
+switch1 = 0 --防止首次进入关卡时卡顿造成误触
 
 -- if stat == "一键日常" then
 --     dialog("一键日常",{timeout = 0,title = "刷完了",button = "OK"})
@@ -77,18 +90,22 @@ while stat == "自选循环刷图" do
             textHUD("点击蓝色开始行动")
             SpdClear()
             randomTap(1148, 656)
-        else
+            --switch1 = 1 --打开开关 表示已经点过蓝色开始行动
+            mSleep(3000)
+        else--if switch1 == 0 then --判断是否已经点过蓝色开关 如果没有再打开代理
             textHUD("检查代理-代理未开")
             textHUD("打开代理")
             SpdClear()
             randomTap(1066, 591)
         end
+        
     
     elseif UIscan == 3 then
         textHUD("开始行动界面")
         textHUD("点击开始行动")
         SpdClear()
         randomTap(1120, 635)
+        --switch1 = 0 --重置蓝色开始行动开关
         mSleep(3000)
         
         while true do
@@ -212,6 +229,7 @@ while stat == "自选剿灭循环" do
             textHUD("点击蓝色开始行动")
             SpdClear()
             randomTap(1148, 656)
+            mSleep(3000)
         else
             textHUD("检查代理-代理未开")
             textHUD("打开代理")
