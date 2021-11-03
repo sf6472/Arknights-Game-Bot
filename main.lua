@@ -9,7 +9,7 @@ gh = 720
 if w == 720 and h == 1280 then
     --dialog("720*1280")
     init('0', 1); --以当前应用 Home 键在右边初始化 --xx用1
-    os.execute("wm overscan 0,0,0,0");
+    
 elseif w == 1280 and h == 720 then
     --dialog("1280*1280")
     init('0', 0); --以当前应用 Home 键在右边初始化 --xx用1
