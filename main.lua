@@ -14,14 +14,15 @@ elseif w == 1280 and h == 720 then
     --dialog("1280*1280")
     init('0', 0); --以当前应用 Home 键在右边初始化 --xx用1
 
--- elseif w > h then
---     init('0', 0); --以当前应用 Home 键在右边初始化 --xx用1
---     os.execute("wm overscan w-gh,0,0,h-gw");
---     os.execute("wm density 240")
--- elseif w < h then
---     init('0', 1); --以当前应用 Home 键在右边初始化 --xx用1
---     os.execute("wm overscan 0,0,w-gw,h-gh");
---     os.execute("wm density 240")
+elseif w > h then
+    os.execute("wm overscan 0,0,640,360");
+    os.execute("wm density 240");
+    init('0', 0); --以当前应用 Home 键在右边初始化 --xx用1
+   
+elseif w < h then
+    os.execute("wm overscan 360,0,0,640");
+    os.execute("wm density 240");
+    init('0', 1); --以当前应用 Home 键在右边初始化 --xx用1
     
 else
     init('0', 1); --以当前应用 Home 键在右边初始化 --xx用1
@@ -49,6 +50,14 @@ switch1 = 0 --防止首次进入关卡时卡顿造成误触
 --     dialog("一键日常",{timeout = 0,title = "刷完了",button = "OK"})
 --     randomTap(964, 661)
 -- end
+
+if stat == "restUI" then
+    dialog("restUI",{timeout = 0,title = "restUI11",button = "OK"})
+    os.execute("wm overscan reset")
+    os.execute("wm density reset")
+    mSleep(1000)
+    lua_exit()
+end
 
 --循环刷图
 while stat == "自选循环刷图" do
@@ -78,6 +87,10 @@ while stat == "自选循环刷图" do
         dialog("完成 - 刷了 "..countEnd.." 遍.",{timeout = 0,title = "刷完了",button = "OK"})
         count = 0 --归零
         countEnd = 0
+        
+        os.execute("wm overscan reset");
+        os.execute("wm density reset");
+    
         break
         
     elseif UIscan == 2 then --关卡出击界面
